@@ -5,9 +5,12 @@ resource "oci_limits_quota" "this" {
   statements     = var.statements
   defined_tags   = var.defined_tags
   freeform_tags  = var.freeform_tags
-  locks {
-    type                = var.quota_locks_type
-    message             = var.quota_locks_message
-    related_resource_id = oci_limits_related_resource.test_related_resource.id
+  dynamic "locks" {
+    for_each = var.locks[*]
+    content {
+      type                = locks.value.type
+      message             = locks.value.message
+      related_resource_id = locks.value.related_resource_id
+    }
   }
 }
