@@ -22,12 +22,12 @@ variable "freeform_tags" {
 
 variable "locks" {
   description = "(Optional) Locks associated with this resource."
-  type = object({
+  type = list(object({
     message             = optional(string)
     related_resource_id = optional(string)
     type                = string
-  })
-  default = null
+  }))
+  default = []
 }
 
 variable "name" {
